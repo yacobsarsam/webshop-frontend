@@ -1,12 +1,8 @@
 import axios, {AxiosRequestConfig} from 'axios';
 
-interface FetchResponse<T> {
-    count: number;
-    next: string | null;
-    results: T[];
-}
+
 const axiosInstanse = axios.create({
-    baseURL:'https://localhost:3000'});
+    baseURL:'http://localhost:8080'});
 
 class ApiClient<T> {
     endpoint:string;
@@ -17,7 +13,7 @@ class ApiClient<T> {
 
  getAll = (config: AxiosRequestConfig) => {
      return axiosInstanse.
-         get<FetchResponse<T>>(this.endpoint, config).
+         get<T[]>(this.endpoint, config).
          then(res => res.data);
  }
     get = (id: number | string ) => {

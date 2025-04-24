@@ -1,11 +1,18 @@
 import useCategories from "@/hooks/useCategories.tsx";
-import {Heading, Spinner, Button, List, ListItem} from "@chakra-ui/react";
+import {
+  Heading,
+  Spinner,
+  Button,
+  List,
+  ListItem,
+  HStack,
+} from "@chakra-ui/react";
+import store from "@/store.ts";
 
 const CategoryList = () => {
   const { data, error, isLoading } = useCategories();
-  console.log("category data: " + data);
-    console.log("error: " +error);
-
+const selectedCategoryId= store(state => state.shopQuery.categoryId);
+    const setSelectedCategoryId = store(state => state.setCategoryId);
   if (error) return null;
   if (isLoading) return <Spinner />;
 
@@ -15,10 +22,24 @@ const CategoryList = () => {
         Category
       </Heading>
       <List.Root>
-          {data?.map((category) =>
-          <ListItem key={category.id} paddingY='5px'>
-              <Button whiteSpace='normal' textAlign="left"  fontSize='xl' variant={"ghost"}>{category.name}</Button>
-          </ListItem>)}
+        {data?.map((category) => (
+          <ListItem key={category.id} paddingY="5px">
+            <HStack>
+              <Button
+                whiteSpace="normal"
+                textAlign="left"
+                fontWeight={
+                  category.id === selectedCategoryId ? "bold" : "normal"
+                }
+                onClick={() => setSelectedCategoryId(category.id)}
+                fontSize="xl"
+                variant={"ghost"}
+              >
+                {category.name}
+              </Button>
+            </HStack>
+          </ListItem>
+        ))}
       </List.Root>
     </>
   );

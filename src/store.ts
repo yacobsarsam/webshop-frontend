@@ -1,24 +1,23 @@
 import {create} from "zustand";
 
-interface GameQuery {
-    genreId?:number;
-    platformId?:number;
-    sortOrder?:string;
-    searchText?:string;
+interface ShopQuery {
+  categoryId?: number;
+  sortOrder?: string;
+  searchText?: string;
 }
-interface GameQueryStore {
-    gameQuery: GameQuery;
-    setSearchText: (searchText:string) => void;
-    setGenreId: (genreId:number) => void;
-    setPlatformId: (platformId:number) => void;
-    setSortOrder: (sortOrder:string) => void;
+
+interface ShopQueryStore {
+  shopQuery: ShopQuery;
+  setCategoryId: (categoryId: number) => void;
+  setSortOrder: (sortOrder: string) => void;
+  setSearchText: (searchText: string) => void;
 }
-const useGameQueryStore = create<GameQueryStore>(set => ({
-    gameQuery:{},
-    setSearchText:(searchText)=>set(()=>({gameQuery:{searchText}})),
-    setGenreId:(genreId)=>set(store=> ({gameQuery:{...store,genreId}})),
-    setPlatformId:(platformId)=>set(store=> ({gameQuery:{...store,platformId}})),
-    setSortOrder:(sortOrder)=>set(store=> ({gameQuery:{...store,sortOrder}})),
+
+const store = create<ShopQueryStore>(set => ({
+    shopQuery: {},
+    setCategoryId: (categoryId) => set(store=>({shopQuery:{...store, categoryId}})),
+    setSortOrder: (sortOrder) => set(store=>({shopQuery:{...store, sortOrder}})),
+    setSearchText: (searchText) => set(store=>({shopQuery:{...store, searchText}})),
 }));
 
-export default useGameQueryStore;
+export default store;

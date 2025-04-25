@@ -1,6 +1,7 @@
 import CategoryList from "@/components/CategoryList";
-import {Box, Grid, GridItem, HStack, useBreakpointValue} from "@chakra-ui/react";
+import {Box, Grid, GridItem,  useBreakpointValue} from "@chakra-ui/react";
 import ProductHeading from "@/components/ProductHeading.tsx";
+import ProductGrid from "@/pages/ProductGrid.tsx";
 
 const HomePage = () => {
   const isLargeScreen = useBreakpointValue({ base: false, lg: true });
@@ -24,9 +25,7 @@ const HomePage = () => {
         <GridItem area="main">
           <Box paddingLeft={5}>
             <ProductHeading />
-              <HStack spacing={5}  marginBottom={5}>
-                  <SortSelector />
-              </HStack>
+
           </Box>
             <ProductGrid />
         </GridItem>

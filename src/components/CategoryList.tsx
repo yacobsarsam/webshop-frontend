@@ -1,4 +1,4 @@
-import useCategories from "@/hooks/useCategories.tsx";
+import useCategories from "@/hooks/useCategories.ts";
 import {
   Heading,
   Spinner,
@@ -11,8 +11,9 @@ import store from "@/store.ts";
 
 const CategoryList = () => {
   const { data, error, isLoading } = useCategories();
-const selectedCategoryId= store(state => state.shopQuery.categoryId);
-    const setSelectedCategoryId = store(state => state.setCategoryId);
+  console.log("category_data", data);
+  const selectedCategoryId = store((state) => state.shopQuery.categoryId);
+  const setSelectedCategoryId = store((state) => state.setCategoryId);
   if (error) return null;
   if (isLoading) return <Spinner />;
 
@@ -22,7 +23,7 @@ const selectedCategoryId= store(state => state.shopQuery.categoryId);
         Category
       </Heading>
       <List.Root>
-        {data?.map((category) => (
+        {data?.content.map((category) => (
           <ListItem key={category.id} paddingY="5px">
             <HStack>
               <Button

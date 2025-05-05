@@ -12,14 +12,14 @@ export const useProducts = () => {
   return useInfiniteQuery<FetchResponse<Product>, Error>({
     queryKey: ["products", shopQuery],
     queryFn: ({ pageParam = 1 }) =>
-      APIClient.getAll({
-        params: {
-          category: shopQuery.categoryId,
-          ordering: shopQuery.sortOrder,
-          search: shopQuery.searchText,
-          page: pageParam,
-        },
-      }),
+        APIClient.getAll({
+          params: {
+            category: shopQuery.categoryId,
+            ordering: shopQuery.sortOrder,
+            search: shopQuery.searchText,
+            page: pageParam,
+          },
+        }),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },

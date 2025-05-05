@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@chakra-ui/cli": "^3.16.0",
-    "@chakra-ui/react": "^3.16.0",
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.17.0",
     "@chakra-ui/theme": "^3.4.6",
+    "@chakra-ui/transition": "^2.1.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@tanstack/react-query-devtools": "^5.74.3",

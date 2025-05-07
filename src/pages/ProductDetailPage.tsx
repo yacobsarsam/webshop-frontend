@@ -15,8 +15,9 @@ const GameDetailPage = () => {
                 <Image
                     src={product.picturePath || noImage}
                     alt={product.name}
-                    height='500px'
+                    width='500px'
                     objectFit="contain"
+                    margin={10}
                 />
             </GridItem>
             <GridItem>

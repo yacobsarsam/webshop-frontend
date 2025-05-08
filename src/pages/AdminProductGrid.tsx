@@ -1,39 +1,46 @@
-import { SimpleGrid, Spinner, Text} from "@chakra-ui/react";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton.tsx";
+import { Spinner, Text, Table } from "@chakra-ui/react";
 import React from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
-import ProductCardContainer from "@/components/ProductCardContainer.tsx";
-import ProductCard from "@/components/ProductCard.tsx";
-import {useProducts} from "@/hooks/useProducts.ts";
+import AdminProductCard from "@/components/AdminProductRow.tsx"; // a single row renderer
+import { useProducts } from "@/hooks/useProducts";
 
-const ProductGrid = () => {
+const AdminProductGrid = () => {
+    const { data, error, isLoading, fetchNextPage, hasNextPage } = useProducts();
 
-    const skeletons = [1,2,3,4,5,6,7,8,9,10];
-    const {data, error,isLoading,fetchNextPage,hasNextPage}= useProducts();
-    if (error) return ( <Text> {error.message} </Text> );
-    console.log("data: ",data)
-    console.log("data.pages: ",data?.pages)
+    if (error) return <Text>{error.message}</Text>;
 
-    const fetchedGameCount = data?.pages.reduce((acc,page)=>acc+page.content.length,0) || 0;
+    const fetchedProductCount = data?.pages.reduce((acc, page) => acc + page.content.length, 0) || 0;
 
     return (
-        <InfiniteScroll dataLength={fetchedGameCount} hasMore={!!hasNextPage} next={()=>fetchNextPage()} loader={<Spinner/>}>
-            <SimpleGrid columns={{sm:1, md:2 , lg:3 , xl:4}} gap={6} padding={5}>
-                {isLoading && skeletons.map(skeleton=>(
-                    <ProductCardContainer key={skeleton}>
-                        <ProductCardSkeleton />
-                    </ProductCardContainer>))}
-
-                {data?.pages.map((page,index)=>
-                    <React.Fragment key={index}>
-
-                        {page.content.map((product)=>
-                            (<ProductCardContainer key={product.id}>
-                                <ProductCard product={product} ></ProductCard>
-                            </ProductCardContainer>)
-                        )}
-                    </React.Fragment>)}
-            </SimpleGrid>
+        <InfiniteScroll
+            dataLength={fetchedProductCount}
+            hasMore={!!hasNextPage}
+            next={fetchNextPage}
+            loader={<Spinner />}
+        >
+            <Table.Root colorScheme="gray" size="md">
+                <Table.Header>
+                    <Table.Row>
+                        <Table.ColumnHeader>Image</Table.ColumnHeader>
+                        <Table.ColumnHeader>Name</Table.ColumnHeader>
+                        <Table.ColumnHeader>Description</Table.ColumnHeader>
+                        <Table.ColumnHeader></Table.ColumnHeader>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {isLoading
+                        ? null // You can show a spinner or skeleton rows here if needed
+                        : data?.pages.map((page, index) => (
+                            <React.Fragment key={index}>
+                                {page.content.map((product) => (
+                                    <AdminProductCard key={product.id} product={product} />
+                                ))}
+                            </React.Fragment>
+                        ))}
+                </Table.Body>
+            </Table.Root>
         </InfiniteScroll>
-    )}
-export default ProductGrid;
+    );
+};
+
+export default AdminProductGrid;

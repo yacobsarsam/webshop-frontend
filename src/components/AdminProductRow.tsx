@@ -2,12 +2,30 @@ import { Button, Table, Image, Text, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Product from "@/entities/Product.ts";
 import noImage from "../assets/no-image-placeholder.webp";
+import ConfirmDialog from "@/components/ConfirmDialog.tsx";
+import useDeleteProduct from "@/hooks/useDeleteProduct";
 
 interface Props {
   product: Product;
+  onProductDeleted: () => void;
 }
 
-const AdminProductRow = ({ product }: Props) => {
+const AdminProductRow = ({ product, onProductDeleted }: Props) => {
+  const { mutate: deleteProduct } = useDeleteProduct();
+
+  const handleDelete = () => {
+    if (!product.id) return;
+
+    deleteProduct(product.id, {
+      onSuccess: () => {
+        console.log(`Product with ID ${product.id} deleted successfully.`);
+          onProductDeleted();      },
+      onError: (err) => {
+        console.error("Error deleting product:", err);
+      },
+    });
+  };
+
   return (
     <Table.Row>
       <Table.Cell>
@@ -32,12 +50,19 @@ const AdminProductRow = ({ product }: Props) => {
             <Button colorPalette="green" size="sm">
               Edit
             </Button>
-          </Link>
-          <Link to={`/delete/${product.id}`}>
-            <Button colorPalette="red" size="sm">
-              Delete
-            </Button>
-          </Link>
+          </Link>{" "}
+          <ConfirmDialog
+            title="Delete Product"
+            message={`Are you sure you want to delete "${product.name}"?`}
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={handleDelete}
+            trigger={
+              <Button colorPalette="red" size="sm">
+                Delete
+              </Button>
+            }
+          />
         </Flex>
       </Table.Cell>
     </Table.Row>

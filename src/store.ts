@@ -1,4 +1,4 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
 interface ShopQuery {
   categoryId?: number;
@@ -13,11 +13,19 @@ interface ShopQueryStore {
   setSearchText: (searchText: string) => void;
 }
 
-const store = create<ShopQueryStore>(set => ({
-    shopQuery: {},
-    setCategoryId: (categoryId) => set(store=>({shopQuery:{...store, categoryId}})),
-    setSortOrder: (sortOrder) => set(store=>({shopQuery:{...store, sortOrder}})),
-    setSearchText: (searchText) => set(store=>({shopQuery:{...store, searchText}})),
+const store = create<ShopQueryStore>((set) => ({
+  shopQuery: {},
+  setCategoryId: (categoryId) =>
+    set((store) => ({ shopQuery: { ...store.shopQuery, categoryId } })),
+  setSortOrder: (sortOrder) =>
+    set((store) => ({ shopQuery: { ...store.shopQuery, sortOrder } })),
+  setSearchText: (searchText) =>
+    set((store) => ({ shopQuery: { ...store.shopQuery, searchText } })),
+  /*setProducts: (products) => set(() => ({ products })),
+  removeProduct: (productId) =>
+      set((store) => ({
+        products: store.products.filter((product) => product.id !== productId),
+      })),*/
 }));
 
 export default store;

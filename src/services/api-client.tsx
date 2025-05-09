@@ -10,12 +10,16 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
 });
 
+const axiosInstanceWithoutAuth = axios.create({
+  baseURL: "http://localhost:8080",
+});
+
 axiosInstance.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token"); // Replace with your token storage method
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 class ApiClient<T> {
@@ -26,13 +30,18 @@ class ApiClient<T> {
   }
 
   getAll = (config: AxiosRequestConfig) => {
-    return axiosInstance
+    return axiosInstanceWithoutAuth
       .get<FetchResponse<T>>(this.endpoint, config)
       .then((res) => res.data);
   };
   get = (id: number | string) => {
-    return axiosInstance
+    return axiosInstanceWithoutAuth
       .get<T>(this.endpoint + "/" + id)
+      .then((res) => res.data);
+  };
+  put = (id: number | string, data: T) => {
+    return axiosInstance
+      .put<T>(this.endpoint + "/" + id, data)
       .then((res) => res.data);
   };
   delete = (id: number | string) => {

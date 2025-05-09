@@ -8,7 +8,7 @@ const ErrorPage = () => {
     console.log(error);
     return (
         <>
-            <NavBar/>
+            <NavBar linkPath={"/"}/>
             <Box padding={5}>
                 <Heading> Oops... </Heading>
                 <Text>

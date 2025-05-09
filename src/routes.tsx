@@ -5,7 +5,7 @@ import Layout from "./pages/Layout.tsx";
 import ProductDetailPage from "@/pages/ProductDetailPage.tsx";
 import Login from "@/pages/Login.tsx";
 import AdminLayout from "@/pages/AdminLayout.tsx";
-import EditProduct from "./pages/EditProduct.tsx";
+import EditProductPage from "./pages/EditProductPage.tsx";
 import AdminProductGrid from "@/pages/AdminProductGrid.tsx";
 const router = createBrowserRouter([
     {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         children: [
             {index: true, element:<AdminProductGrid />},
             {path:'products/:id', element: <ProductDetailPage />},
-            {path:'products/edit/:id', element: <EditProduct /> },
+            {path:'products/edit/:id', element: <EditProductPage /> },
         ],
     },
 ])

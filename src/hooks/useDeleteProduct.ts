@@ -5,9 +5,8 @@ import Product from "@/entities/Product";
 const apiClient = new APIClient<Product>("/products");
 
 const useDeleteProduct = () =>
-    useMutation({
-        mutationFn: (id: number) => apiClient.delete(id),
-
-    });
+  useMutation({
+    mutationFn: (id: number) => apiClient.delete(id),
+  });
 
 export default useDeleteProduct;

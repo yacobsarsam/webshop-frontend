@@ -1,4 +1,6 @@
 import { Button, Table, Image, Text, Flex } from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
+
 import { Link } from "react-router-dom";
 import Product from "@/entities/Product.ts";
 import noImage from "../assets/no-image-placeholder.webp";
@@ -15,13 +17,28 @@ const AdminProductRow = ({ product, onProductDeleted }: Props) => {
 
   const handleDelete = () => {
     if (!product.id) return;
-
+    console.log("deleted product: " + deleteProduct);
     deleteProduct(product.id, {
       onSuccess: () => {
+        toaster.create({
+          title: "Product deleted.",
+          description: `Product "${product.name}" was successfully deleted.`,
+          type: "success",
+          duration: 3000,
+        });
+        alert(`Product with name ${product.name} deleted successfully.`);
         console.log(`Product with ID ${product.id} deleted successfully.`);
-          onProductDeleted();      },
+        onProductDeleted();
+      },
       onError: (err) => {
+        toaster.create({
+          title: "Failed to delete product.",
+          description: `Could not delete "${product.name}". Please try again.`,
+          duration: 3000,
+          type: "error",
+        });
         console.error("Error deleting product:", err);
+        alert(`Could not delete "${product.name}". Please try again.`);
       },
     });
   };
@@ -46,8 +63,7 @@ const AdminProductRow = ({ product, onProductDeleted }: Props) => {
       </Table.Cell>
       <Table.Cell>
         <Flex gap={2} justifyContent={"flex-end"}>
-          <Link to={`/edit/${product.id}`}>
-            <Button colorPalette="green" size="sm">
+            <Link to={`/admin/products/edit/${product.id}`}>            <Button colorPalette="green" size="sm">
               Edit
             </Button>
           </Link>{" "}

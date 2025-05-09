@@ -13,7 +13,7 @@ const AdminLayout = () => {
 
     return (
         <Box>
-            <NavBar />
+            <NavBar linkPath={"/admin"} />
             <Box id="admin-main" padding={5}>
                 <Outlet />
             </Box>

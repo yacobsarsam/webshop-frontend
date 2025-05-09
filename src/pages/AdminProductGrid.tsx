@@ -5,16 +5,17 @@ import AdminProductCard from "@/components/AdminProductRow.tsx"; // a single row
 import { useProducts } from "@/hooks/useProducts";
 
 const AdminProductGrid = () => {
-  const { data, error, isLoading, fetchNextPage, hasNextPage, refetch } = useProducts();
+  const { data, error, isLoading, fetchNextPage, hasNextPage, refetch } =
+    useProducts();
 
   if (error) return <Text>{error.message}</Text>;
 
   const fetchedProductCount =
     data?.pages.reduce((acc, page) => acc + page.content.length, 0) || 0;
 
-    const handleProductDeleted = () => {
-        refetch(); // Re-fetch the product list after a product is deleted
-    };
+  const handleProductDeleted = () => {
+    refetch();
+  };
 
   return (
     <InfiniteScroll

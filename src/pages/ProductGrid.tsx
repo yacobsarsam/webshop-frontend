@@ -11,8 +11,7 @@ const ProductGrid = () => {
     const skeletons = [1,2,3,4,5,6,7,8,9,10];
     const {data, error,isLoading,fetchNextPage,hasNextPage}= useProducts();
     if (error) return ( <Text> {error.message} </Text> );
-    console.log("data: ",data)
-    console.log("data.pages: ",data?.pages)
+
 
     const fetchedGameCount = data?.pages.reduce((acc,page)=>acc+page.content.length,0) || 0;
 

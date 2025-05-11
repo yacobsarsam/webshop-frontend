@@ -115,7 +115,7 @@ const EditProductPage = () => {
           <Textarea
             id="description"
             name="description"
-            value={formData.description}
+            value={formData.description ?? ""}
             onChange={handleChange}
             placeholder="Enter product description"
           />
@@ -125,7 +125,7 @@ const EditProductPage = () => {
           <Textarea
             id="picturePath"
             name="picturePath"
-            value={formData.picturePath}
+            value={formData.picturePath ?? ""}
             onChange={handleChange}
             placeholder="Enter product picture path"
           />

@@ -1,4 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import useAuthStore from "@/authStore.ts";
+import router from "@/routes.tsx";
 
 export interface FetchResponse<T> {
   count: number;
@@ -15,12 +17,23 @@ const axiosInstanceWithoutAuth = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = useAuthStore.getState().token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+      if (error.response?.status === 401) {
+        useAuthStore.getState().logout(); // Clear token from Zustand
+        const currentPath = window.location.pathname;
+        router.navigate(`/login?redirectTo=${encodeURIComponent(currentPath)}`);
+      }
+      return Promise.reject(error);
+    }
+);
 
 class ApiClient<T> {
   endpoint: string;

@@ -8,6 +8,8 @@ import AdminLayout from "@/pages/AdminLayout.tsx";
 import EditProductPage from "./pages/EditProductPage.tsx";
 import AdminProductGrid from "@/pages/AdminProductGrid.tsx";
 import RequireAuth from "@/components/RequireAuth"; // ← Add this
+import AddUserPage from "./components/AddUserPage.tsx";
+import AddProductPage from "./pages/AddProductPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,16 @@ const router = createBrowserRouter([
       { index: true, element: <AdminProductGrid /> },
       { path: "products/:id", element: <ProductDetailPage /> },
       { path: "products/edit/:id", element: <EditProductPage /> },
+      { path: "products/add", element: <AddProductPage /> },
+
+      {
+        path: "users/register",
+        element: (
+          <RequireAuth requiredRole="ADMIN">
+            <AddUserPage />
+          </RequireAuth>
+        ),
+      },
     ],
   },
 ]);

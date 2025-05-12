@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import useAuthStore from "@/authStore.ts";
 import router from "@/routes.tsx";
 
@@ -24,15 +24,15 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 axiosInstance.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        useAuthStore.getState().logout(); // Clear token from Zustand
-        const currentPath = window.location.pathname;
-        router.navigate(`/login?redirectTo=${encodeURIComponent(currentPath)}`);
-      }
-      return Promise.reject(error);
+  (response) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().logout(); // Clear token from Zustand
+      const currentPath = window.location.pathname;
+      router.navigate(`/login?redirectTo=${encodeURIComponent(currentPath)}`);
     }
+    return Promise.reject(error);
+  },
 );
 
 class ApiClient<T> {
@@ -51,6 +51,16 @@ class ApiClient<T> {
     return axiosInstanceWithoutAuth
       .get<T>(this.endpoint + "/" + id)
       .then((res) => res.data);
+  };
+  post = (data: T) => {
+    return axiosInstance
+      .post<T>(this.endpoint, data)
+      .then((res) => res.data);
+  };
+  postForm = (formData: FormData) => {
+    return axiosInstance
+        .post<T>(this.endpoint, formData)
+        .then((res) => res.data);
   };
   put = (id: number | string, data: T) => {
     return axiosInstance

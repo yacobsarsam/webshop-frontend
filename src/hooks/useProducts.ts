@@ -6,7 +6,7 @@ import ApiClient, {FetchResponse} from "@/services/api-client.tsx";
 
 const APIClient = new ApiClient<Product>("/products");
 
-export const useProducts = () => {
+export const useCategories = () => {
   const shopQuery = useShopQueryStore((s) => s.shopQuery);
 
   return useInfiniteQuery<FetchResponse<Product>, Error>({

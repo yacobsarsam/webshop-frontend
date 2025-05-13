@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { Box, Button, Input, Textarea, Heading, Field } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  Textarea,
+  Heading,
+  Field,
+  Spinner,
+} from "@chakra-ui/react";
 import useCreateProduct from "@/hooks/useCreateProduct";
 import Product from "@/entities/Product";
 import { toaster } from "@/components/ui/toaster";
+import { useNavigate } from "react-router-dom";
 
 const AddProductPage = () => {
-  const { mutate: createProduct } = useCreateProduct();
+  const { mutate: createProduct, status } = useCreateProduct();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Product>({
     id: 0,
@@ -59,6 +69,8 @@ const AddProductPage = () => {
             duration: 3000,
             closable: true,
           });
+          alert("Product added successfully!");
+          navigate("/admin");
         },
         onError: () => {
           toaster.create({
@@ -147,8 +159,8 @@ const AddProductPage = () => {
             placeholder="Enter product category ID"
           />
         </Field.Root>
-        <Button type="submit" colorScheme="blue" disabled={!isValid}>
-          Add Product
+        <Button type="submit" colorPalette="blue" disabled={!isValid}>
+          {status === "pending" ? <Spinner size="sm" /> : "Add Product"}
         </Button>
       </form>
     </Box>

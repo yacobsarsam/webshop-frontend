@@ -11,7 +11,7 @@ interface CreateProductInput {
 
 const useCreateProduct = () =>
     useMutation({
-        mutationFn: ({ product, picture }: CreateProductInput) => {
+        mutationFn: async ({ product, picture }: CreateProductInput) => {
             const formData = new FormData();
 
             // Append product JSON as a Blob
@@ -25,7 +25,7 @@ const useCreateProduct = () =>
                 formData.append("picture", picture);
             }
 
-            return apiClient.postForm(formData);
+            return await apiClient.postForm(formData);
         },
     });
 

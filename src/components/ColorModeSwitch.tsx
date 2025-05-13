@@ -6,7 +6,7 @@ const ColorModeSwitch = () => {
     const {toggleColorMode}= useColorMode();
     return(
         <HStack>
-            <ColorModeButton colorScheme={"green"}  onClick={toggleColorMode}/>
+            <ColorModeButton colorPalette={"green"}  onClick={toggleColorMode}/>
             <Text whiteSpace={"nowrap"}>Dark mode</Text>
         </HStack>
     );

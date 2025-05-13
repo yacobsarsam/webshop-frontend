@@ -14,7 +14,7 @@ const ExpandableText = ({children}:Props) => {
     return (
         <Text>
             {summary}
-            <Button size={"xs"} marginLeft={1} fontWeight={"bold"} colorScheme={"yellow"} onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less':'Read more'} </Button>
+            <Button size={"xs"} marginLeft={1} fontWeight={"bold"} colorPalette={"yellow"} onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less':'Read more'} </Button>
         </Text>
     );
 }

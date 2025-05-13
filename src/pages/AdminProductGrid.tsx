@@ -2,11 +2,11 @@ import { Spinner, Text, Table } from "@chakra-ui/react";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import AdminProductCard from "@/components/AdminProductRow.tsx"; // a single row renderer
-import { useProducts } from "@/hooks/useProducts";
+import { useCategories } from "@/hooks/useProducts";
 
 const AdminProductGrid = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage, refetch } =
-    useProducts();
+    useCategories();
 
   if (error) return <Text>{error.message}</Text>;
 
@@ -24,7 +24,7 @@ const AdminProductGrid = () => {
       next={fetchNextPage}
       loader={<Spinner />}
     >
-      <Table.Root colorScheme="gray" size="md">
+      <Table.Root colorPalette="gray" size="md">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader>Image</Table.ColumnHeader>

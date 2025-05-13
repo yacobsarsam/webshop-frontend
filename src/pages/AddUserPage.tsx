@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@/authStore";
+import useAuthStore from "@/authStore.ts";
+import {Button} from "@chakra-ui/react";
 
 const AddUserPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -36,12 +37,12 @@ const AddUserPage: React.FC = () => {
 
       alert("User created successfully!");
       navigate("/admin"); // Redirect to admin page after success
-    }catch (err: unknown) {
+    } catch (err: unknown) {
       console.error(err);
       if (axios.isAxiosError(err)) {
         setError(
-            err.response?.data?.message ||
-            `Error ${err.response?.status}: ${err.response?.statusText || "Forbidden"}`
+          err.response?.data?.message ||
+            `Error ${err.response?.status}: ${err.response?.statusText || "Forbidden"}`,
         );
       } else {
         setError("An unexpected error occurred.");
@@ -103,9 +104,9 @@ const AddUserPage: React.FC = () => {
           </select>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" style={{ padding: "0.5rem 1rem" }}>
+        <Button type="submit" style={{ padding: "0.5rem 1rem" }} colorPalette="blue" >
           Create User
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -4,12 +4,12 @@ import React from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductCardContainer from "@/components/ProductCardContainer.tsx";
 import ProductCard from "@/components/ProductCard.tsx";
-import {useProducts} from "@/hooks/useProducts.ts";
+import {useCategories} from "@/hooks/useProducts.ts";
 
 const ProductGrid = () => {
 
     const skeletons = [1,2,3,4,5,6,7,8,9,10];
-    const {data, error,isLoading,fetchNextPage,hasNextPage}= useProducts();
+    const {data, error,isLoading,fetchNextPage,hasNextPage}= useCategories();
     if (error) return ( <Text> {error.message} </Text> );
 
 

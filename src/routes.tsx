@@ -8,8 +8,10 @@ import AdminLayout from "@/pages/AdminLayout.tsx";
 import EditProductPage from "./pages/EditProductPage.tsx";
 import AdminProductGrid from "@/pages/AdminProductGrid.tsx";
 import RequireAuth from "@/components/RequireAuth"; // ← Add this
-import AddUserPage from "./components/AddUserPage.tsx";
+import AddUserPage from "./pages/AddUserPage.tsx";
 import AddProductPage from "./pages/AddProductPage.tsx";
+import AdminCategoriesPage from "@/pages/AdminCategoriesPage.tsx";
+import EditCategoryPage from "@/pages/EditCategoryPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,8 @@ const router = createBrowserRouter([
       { path: "products/:id", element: <ProductDetailPage /> },
       { path: "products/edit/:id", element: <EditProductPage /> },
       { path: "products/add", element: <AddProductPage /> },
+      { path: "categories/", element: <AdminCategoriesPage /> },
+      { path: "categories/edit/:id", element: <EditCategoryPage /> },
 
       {
         path: "users/register",

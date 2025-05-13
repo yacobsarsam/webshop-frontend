@@ -6,7 +6,7 @@ const GameHeading = () => {
     const categoryId = store(s=>s.shopQuery.categoryId);
     const category = useCategory(categoryId);
 
-    const heading = `${category?.name ||'' } Category`;
+    const heading = `${category?.category ||'' } Category`;
 
     return (
         <Heading as='h1' marginY={5} fontSize='5xl' > {heading} </ Heading>

@@ -48,7 +48,7 @@ const ConfirmDialog = ({
                   {cancelText}
                 </Button>
               </Dialog.ActionTrigger>
-              <Button colorScheme="red" onClick={handleConfirm}>
+              <Button colorPalette="red" onClick={handleConfirm}>
                 {confirmText}
               </Button>
             </Dialog.Footer>

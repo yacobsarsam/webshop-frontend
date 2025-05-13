@@ -163,7 +163,7 @@ const EditProductPage = () => {
             placeholder="Enter product category ID"
           />
         </Field.Root>
-        <Button type="submit" colorScheme="blue" disabled={!isValid}>
+        <Button type="submit" colorPalette="blue" disabled={!isValid}>
           Save Changes
         </Button>
       </form>

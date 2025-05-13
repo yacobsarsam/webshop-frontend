@@ -20,7 +20,7 @@ const AdminProductGrid = () => {
   return (
     <InfiniteScroll
       dataLength={fetchedProductCount}
-      hasMore={!!hasNextPage}
+      hasMore={hasNextPage}
       next={fetchNextPage}
       loader={<Spinner />}
     >
@@ -34,19 +34,21 @@ const AdminProductGrid = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {isLoading
-            ? null // You can show a spinner or skeleton rows here if needed
-            : data?.pages.map((page, index) => (
-                <React.Fragment key={index}>
-                  {page.content.map((product) => (
-                    <AdminProductCard
-                      key={product.id}
-                      product={product}
-                      onProductDeleted={handleProductDeleted}
-                    />
-                  ))}
-                </React.Fragment>
-              ))}
+          {isLoading ? (
+            <Spinner /> // You can show a spinner or skeleton rows here if needed
+          ) : (
+            data?.pages.map((page, index) => (
+              <React.Fragment key={index}>
+                {page.content.map((product) => (
+                  <AdminProductCard
+                    key={product.id}
+                    product={product}
+                    onProductDeleted={handleProductDeleted}
+                  />
+                ))}
+              </React.Fragment>
+            ))
+          )}
         </Table.Body>
       </Table.Root>
     </InfiniteScroll>

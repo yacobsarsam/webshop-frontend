@@ -1,4 +1,4 @@
-import { Text, Table } from "@chakra-ui/react";
+import {Text, Table, Spinner} from "@chakra-ui/react";
 import AdminCategoryCard from "@/components/AdminCategoryRow.tsx"; // a single row renderer
 import useCategories from "@/hooks/useCategories.ts";
 
@@ -22,7 +22,7 @@ const AdminCategoryGrid = () => {
         </Table.Header>
         <Table.Body>
           {isLoading
-            ? null // You can show a spinner or skeleton rows here if needed
+            ? <Spinner /> // You can show a spinner or skeleton rows here if needed
             : data?.content.map((category) => (
                 <AdminCategoryCard
                   key={category.id}

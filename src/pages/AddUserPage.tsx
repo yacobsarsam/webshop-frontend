@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/authStore.ts";
-import {Button} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import PageButton from "@/components/PageButton.tsx";
 
 const AddUserPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -104,9 +105,14 @@ const AddUserPage: React.FC = () => {
           </select>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <Button type="submit" style={{ padding: "0.5rem 1rem" }} colorPalette="blue" >
+        <Button
+          type="submit"
+          style={{ padding: "0.5rem 1rem" }}
+          colorPalette="blue"
+        >
           Create User
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/users/"} />
       </form>
     </div>
   );

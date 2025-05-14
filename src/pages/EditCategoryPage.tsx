@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import { Box, Button, Input, Spinner, Heading, Field } from "@chakra-ui/react";
 import useUpdateCategory from "@/hooks/useUpdateCategory";
 import { toaster } from "@/components/ui/toaster";
 import useCategory from "@/hooks/useCategory.ts";
 import Category from "@/entities/Category.ts";
+import PageButton from "@/components/PageButton.tsx";
 
 const EditCategoryPage = () => {
   const { id } = useParams();
   const { category, isLoading, error } = useCategory(parseInt(id!));
   const { mutate: updateCategory } = useUpdateCategory();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Category>({
     id: 0,
@@ -61,7 +63,8 @@ const EditCategoryPage = () => {
           closable: true,
         });
         alert(`Category updated successfully.`);
-      },
+        navigate("/admin/categories");
+        },
       onError: () => {
         toaster.create({
           title: "Update failed.",
@@ -97,6 +100,8 @@ const EditCategoryPage = () => {
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           Save Changes
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/categories/"}/>
+
       </form>
     </Box>
   );

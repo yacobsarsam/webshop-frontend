@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, Input, Heading, Field, Spinner } from "@chakra-ui/react";
 import useCreateCategory from "@/hooks/useCreateCategory";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
 import Category from "@/entities/Category.ts";
+import PageButton from "@/components/PageButton.tsx";
 
 const AddCategoryPage = () => {
   const { mutate: createCategory, status } = useCreateCategory();
@@ -84,6 +85,8 @@ const AddCategoryPage = () => {
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           {status === "pending" ? <Spinner size="sm" /> : "Add Category"}
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/categories/"} />
+
       </form>
     </Box>
   );

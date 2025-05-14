@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
@@ -14,6 +14,7 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import useUser from "@/hooks/useUser";
 import useUpdateUser from "@/hooks/useUpdateUser";
+import PageButton from "@/components/PageButton.tsx";
 
 const roles = createListCollection({
   items: [
@@ -149,9 +150,10 @@ const EditUserPage = () => {
             </Portal>
           </Select.Root>
         </Field.Root>
-        <Button type="submit" colorScheme="blue" disabled={!isValid}>
+        <Button type="submit" colorPalette="blue" disabled={!isValid}>
           Save Changes
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/users/"}/>
       </form>
     </Box>
   );

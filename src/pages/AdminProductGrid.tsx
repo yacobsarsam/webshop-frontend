@@ -31,6 +31,7 @@ const AdminProductGrid = () => {
               <Table.ColumnHeader>Image</Table.ColumnHeader>
               <Table.ColumnHeader>Name</Table.ColumnHeader>
               <Table.ColumnHeader>Description</Table.ColumnHeader>
+              <Table.ColumnHeader>Category ID</Table.ColumnHeader>
               <Table.ColumnHeader>
                 <Flex justifyContent="flex-end">
                   <Link to="/admin/products/add">

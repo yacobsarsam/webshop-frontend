@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -12,6 +12,7 @@ import useCreateProduct from "@/hooks/useCreateProduct";
 import Product from "@/entities/Product";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
+import PageButton from "@/components/PageButton.tsx";
 
 const AddProductPage = () => {
   const { mutate: createProduct, status } = useCreateProduct();
@@ -162,6 +163,8 @@ const AddProductPage = () => {
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           {status === "pending" ? <Spinner size="sm" /> : "Add Product"}
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/"} />
+
       </form>
     </Box>
   );

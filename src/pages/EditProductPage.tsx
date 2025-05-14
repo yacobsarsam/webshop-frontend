@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,16 +8,23 @@ import {
   Spinner,
   Heading,
   Field,
+  Select,
+  Portal,
+  createListCollection,
 } from "@chakra-ui/react";
 import useProduct from "@/hooks/useProduct";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
+import useCategories from "@/hooks/useCategories";
 import Product from "@/entities/Product";
 import { toaster } from "@/components/ui/toaster";
+import PageButton from "@/components/PageButton.tsx";
 
 const EditProductPage = () => {
   const { id } = useParams();
   const { data: product, isLoading, error } = useProduct(parseInt(id!));
+  const { data: categories } = useCategories();
   const { mutate: updateProduct } = useUpdateProduct();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Product>({
     id: 0,
@@ -42,9 +49,14 @@ const EditProductPage = () => {
     setFormData((prev) => ({
       ...prev,
       [name]:
-        name === "price" || name === "quantity" || name === "categoryId"
-          ? parseFloat(value)
-          : value,
+        name === "price" || name === "quantity" ? parseFloat(value) : value,
+    }));
+  };
+
+  const handleCategoryChange = (details: { value: string[] }) => {
+    setFormData((prev) => ({
+      ...prev,
+      categoryId: parseInt(details.value[0]),
     }));
   };
 
@@ -75,7 +87,7 @@ const EditProductPage = () => {
         });
 
         alert(`Product updated successfully.`);
-
+        navigate("/admin/");
       },
       onError: () => {
         toaster.create({
@@ -85,8 +97,7 @@ const EditProductPage = () => {
           duration: 3000,
           closable: true,
         });
-        alert(`Could not update "${name}". Please try again.`);
-
+        alert(`Could not update "${formData.name}". Please try again.`);
       },
     });
   };
@@ -100,6 +111,14 @@ const EditProductPage = () => {
     formData.price > 0 &&
     formData.quantity >= 0 &&
     formData.categoryId > 0;
+
+  const categoryCollection = createListCollection({
+    items:
+      categories?.content.map((cat) => ({
+        label: cat.name,
+        value: cat.id.toString(),
+      })) || [],
+  });
 
   return (
     <Box maxW="600px" mx="auto" mt={10}>
@@ -158,19 +177,40 @@ const EditProductPage = () => {
           />
         </Field.Root>
         <Field.Root mb={4}>
-          <Field.Label htmlFor="categoryId">Category</Field.Label>
-          <Input
-            id="categoryId"
-            name="categoryId"
-            type="number"
-            value={formData.categoryId}
-            onChange={handleChange}
-            placeholder="Enter product category ID"
-          />
+          <Field.Label>Category</Field.Label>
+          <Select.Root
+            collection={categoryCollection}
+            value={[formData.categoryId.toString()]}
+            onValueChange={(details) => handleCategoryChange(details)}
+          >
+            <Select.HiddenSelect />
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText placeholder="Select category" />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {categoryCollection.items.map((item) => (
+                    <Select.Item item={item} key={item.value}>
+                      {item.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
         </Field.Root>
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           Save Changes
         </Button>
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/"}/>
+
       </form>
     </Box>
   );

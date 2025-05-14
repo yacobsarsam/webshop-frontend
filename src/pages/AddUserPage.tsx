@@ -36,7 +36,7 @@ const AddUserPage: React.FC = () => {
       );
 
       alert("User created successfully!");
-      navigate("/admin"); // Redirect to admin page after success
+      navigate("/admin/users/"); // Redirect to admin page after success
     } catch (err: unknown) {
       console.error(err);
       if (axios.isAxiosError(err)) {

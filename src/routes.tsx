@@ -10,8 +10,11 @@ import AdminProductGrid from "@/pages/AdminProductGrid.tsx";
 import RequireAuth from "@/components/RequireAuth"; // ← Add this
 import AddUserPage from "./pages/AddUserPage.tsx";
 import AddProductPage from "./pages/AddProductPage.tsx";
-import AdminCategoriesPage from "@/pages/AdminCategoriesPage.tsx";
+import AdminCategoriesPage from "@/pages/AdminCategoriesGrid.tsx";
 import EditCategoryPage from "@/pages/EditCategoryPage.tsx";
+import AddCategoryPage from "@/pages/AddCategoryPage.tsx";
+import AdminUsersGrid from "@/pages/AdminUsersGrid.tsx";
+import EditUserPage from "@/pages/EditUserPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +45,23 @@ const router = createBrowserRouter([
       { path: "products/add", element: <AddProductPage /> },
       { path: "categories/", element: <AdminCategoriesPage /> },
       { path: "categories/edit/:id", element: <EditCategoryPage /> },
-
+      { path: "categories/add", element: <AddCategoryPage /> },
+      {
+        path: "users",
+        element: (
+          <RequireAuth requiredRole="ADMIN">
+            <AdminUsersGrid />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "users/edit/:id",
+        element: (
+            <RequireAuth requiredRole="ADMIN">
+              <EditUserPage />
+            </RequireAuth>
+        ),
+      },
       {
         path: "users/register",
         element: (

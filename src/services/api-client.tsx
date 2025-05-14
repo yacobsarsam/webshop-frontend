@@ -43,7 +43,8 @@ class ApiClient<T> {
   }
 
   getAll = (config: AxiosRequestConfig) => {
-    return axiosInstanceWithoutAuth
+    const instance = this.endpoint.includes("/users") ? axiosInstance : axiosInstanceWithoutAuth;
+    return instance
       .get<FetchResponse<T>>(this.endpoint, config)
       .then((res) => res.data);
   };

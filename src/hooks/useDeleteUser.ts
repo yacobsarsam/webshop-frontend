@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import APIClient from "@/services/api-client";
-import Category from "@/entities/Category.ts";
+import User from "@/entities/User.ts";
 
-const apiClient = new APIClient<Category>("/category");
+const apiClient = new APIClient<User>("/users");
 
-const useDeleteCategory = () =>
+const useDeleteProduct = () =>
   useMutation({
     mutationFn: (id: number) => apiClient.delete(id),
   });
 
-export default useDeleteCategory;
+export default useDeleteProduct;

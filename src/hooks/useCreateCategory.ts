@@ -4,9 +4,9 @@ import Category from "@/entities/Category.ts";
 
 const apiClient = new APIClient<Category>("/category");
 
-const useDeleteCategory = () =>
+const useCreateCategory = () =>
   useMutation({
-    mutationFn: (id: number) => apiClient.delete(id),
+    mutationFn: (category: Category) => apiClient.post(category),
   });
 
-export default useDeleteCategory;
+export default useCreateCategory;

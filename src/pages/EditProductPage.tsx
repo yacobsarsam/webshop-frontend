@@ -73,6 +73,9 @@ const EditProductPage = () => {
           duration: 3000,
           closable: true,
         });
+
+        alert(`Product updated successfully.`);
+
       },
       onError: () => {
         toaster.create({
@@ -82,6 +85,8 @@ const EditProductPage = () => {
           duration: 3000,
           closable: true,
         });
+        alert(`Could not update "${name}". Please try again.`);
+
       },
     });
   };

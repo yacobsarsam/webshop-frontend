@@ -20,24 +20,26 @@ const NavBar = ({ linkPath }: NavBarProps) => {
         {linkPath === "/admin" && <AuthButton />}
       </HStack>
 
-        {linkPath === "/admin" && <Flex justifyContent="flex-end" mb={4} gap={4}>
-        <Link to="/admin/categories/">
-          <Button colorPalette="blue" size="sm">
-            Categories
-          </Button>
-        </Link>
+      {linkPath === "/admin" && (
+        <Flex justifyContent="flex-end" mb={4} gap={4} px={10}>
+          <Link to="/admin/categories/">
+            <Button colorPalette="blue" size="sm">
+              Categories
+            </Button>
+          </Link>
 
-        <Link to="/admin/users/register">
-          <Button colorPalette="blue" size="sm">
-            Users
-          </Button>
-        </Link>
-        <Link to="/admin/products/add">
-          <Button colorPalette="blue" size="sm">
-            Add Product
-          </Button>
-        </Link>
-      </Flex>}
+          <Link to="/admin/users/">
+            <Button colorPalette="blue" size="sm">
+              Users
+            </Button>
+          </Link>
+          <Link to="/admin">
+            <Button colorPalette="blue" size="sm">
+              Products
+            </Button>
+          </Link>
+        </Flex>
+      )}
     </>
   );
 };

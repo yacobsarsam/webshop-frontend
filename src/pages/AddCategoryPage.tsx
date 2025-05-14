@@ -1,26 +1,18 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Box, Button, Input, Spinner, Heading, Field } from "@chakra-ui/react";
-import useUpdateCategory from "@/hooks/useUpdateCategory";
+import { useState } from "react";
+import { Box, Button, Input, Heading, Field, Spinner } from "@chakra-ui/react";
+import useCreateCategory from "@/hooks/useCreateCategory";
 import { toaster } from "@/components/ui/toaster";
-import useCategory from "@/hooks/useCategory.ts";
+import { useNavigate } from "react-router-dom";
 import Category from "@/entities/Category.ts";
 
-const EditCategoryPage = () => {
-  const { id } = useParams();
-  const { category, isLoading, error } = useCategory(parseInt(id!));
-  const { mutate: updateCategory } = useUpdateCategory();
+const AddCategoryPage = () => {
+  const { mutate: createCategory, status } = useCreateCategory();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Category>({
     id: 0,
     name: "",
   });
-
-  useEffect(() => {
-    if (category) {
-      setFormData(category);
-    }
-  }, [category]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -28,10 +20,7 @@ const EditCategoryPage = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        name === "price" || name === "quantity" || name === "categoryId"
-          ? parseFloat(value)
-          : value,
+      [name]: value,
     }));
   };
 
@@ -51,38 +40,35 @@ const EditCategoryPage = () => {
       return;
     }
 
-    updateCategory(formData, {
+    createCategory(formData, {
       onSuccess: () => {
         toaster.create({
-          title: "Category updated.",
-          description: `Category "${formData.name}" was successfully updated.`,
+          title: "Category created.",
+          description: `Category "${formData.name}" was successfully created.`,
           type: "success",
           duration: 3000,
           closable: true,
         });
-        alert(`Category updated successfully.`);
+        alert("Category added successfully!");
+        navigate("/admin");
       },
       onError: () => {
         toaster.create({
-          title: "Update failed.",
-          description: `Could not update "${formData.name}". Please try again.`,
+          title: "Creation failed.",
+          description: `Could not create "${formData.name}". Please try again.`,
           type: "error",
           duration: 3000,
           closable: true,
         });
-        alert(`Could not update "${formData.name}". Please try again.`);
       },
     });
   };
-
-  if (isLoading) return <Spinner />;
-  if (error || !category) return <p>Error loading category details.</p>;
 
   const isValid = formData.name.trim() !== "";
 
   return (
     <Box maxW="600px" mx="auto" mt={10}>
-      <Heading mb={6}>Edit Category</Heading>
+      <Heading mb={6}>Add New Category</Heading>
       <form onSubmit={handleSubmit}>
         <Field.Root mb={4}>
           <Field.Label htmlFor="name">Category Name</Field.Label>
@@ -91,15 +77,16 @@ const EditCategoryPage = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="Enter category name"
+            placeholder="Enter Category name"
           />
         </Field.Root>
+
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
-          Save Changes
+          {status === "pending" ? <Spinner size="sm" /> : "Add Category"}
         </Button>
       </form>
     </Box>
   );
 };
 
-export default EditCategoryPage;
+export default AddCategoryPage;

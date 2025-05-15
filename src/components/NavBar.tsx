@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SearchInput from "@/components/SearchInput.tsx";
 import ColorModeSwitch from "./ColorModeSwitch";
 import AuthButton from "@/components/AuthButton.tsx";
+import Cart from "@/components/Cart.tsx";
 
 interface NavBarProps {
   linkPath: string;
@@ -11,14 +12,19 @@ interface NavBarProps {
 const NavBar = ({ linkPath }: NavBarProps) => {
   return (
     <>
-      <HStack padding={10}>
-        <Link to={linkPath}>
-          <Image src={logo} boxSize="60px" alt="Logo" objectFit={"cover"} />
-        </Link>
-        <SearchInput />
-        <ColorModeSwitch></ColorModeSwitch>
-        {linkPath === "/admin" && <AuthButton />}
-      </HStack>
+      <Flex direction="column" padding={10}>
+        <Flex justifyContent="flex-end" width="100%">
+          {linkPath === "/" && <Cart />}
+          {linkPath === "/admin" && <AuthButton />}
+        </Flex>
+        <HStack>
+          <Link to={linkPath}>
+            <Image src={logo} boxSize="60px" alt="Logo" objectFit={"cover"} />
+          </Link>
+          <SearchInput />
+          <ColorModeSwitch />
+        </HStack>
+      </Flex>
 
       {linkPath === "/admin" && (
         <Flex justifyContent="flex-end" mb={4} gap={4} px={10}>

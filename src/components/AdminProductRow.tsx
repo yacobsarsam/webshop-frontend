@@ -61,14 +61,16 @@ const AdminProductRow = ({ product, onProductDeleted }: Props) => {
           {product.description}
         </Text>
       </Table.Cell>
-        <Table.Cell>
-            <Text fontSize="sm" color="gray.600">
-                {product.categoryId}
-            </Text>
-        </Table.Cell>
+      <Table.Cell>
+        <Text fontSize="sm" color="gray.600">
+          {product.categoryId}
+        </Text>
+      </Table.Cell>
       <Table.Cell>
         <Flex gap={2} justifyContent={"flex-end"}>
-            <Link to={`/admin/products/edit/${product.id}`}>            <Button colorPalette="green" size="sm">
+          <Link to={`/admin/products/edit/${product.id}`}>
+            {" "}
+            <Button colorPalette="green" size="sm">
               Edit
             </Button>
           </Link>{" "}

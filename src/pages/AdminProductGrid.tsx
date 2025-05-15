@@ -7,67 +7,67 @@ import React from "react";
 
 const AdminProductGrid = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage, refetch } =
-      useCategories();
+    useCategories();
 
   if (error) return <Text>{error.message}</Text>;
 
   const fetchedProductCount =
-      data?.pages.reduce((acc, page) => acc + page.content.length, 0) || 0;
+    data?.pages.reduce((acc, page) => acc + page.content.length, 0) || 0;
 
   const handleProductDeleted = () => {
     refetch();
   };
 
   return (
-      <InfiniteScroll
-          dataLength={fetchedProductCount}
-          hasMore={hasNextPage}
-          next={fetchNextPage}
-          loader={<Spinner />}
-      >
-        <Table.Root colorPalette="gray" size="md">
-          <Table.Header>
+    <InfiniteScroll
+      dataLength={fetchedProductCount}
+      hasMore={hasNextPage}
+      next={fetchNextPage}
+      loader={<Spinner />}
+    >
+      <Table.Root colorPalette="gray" size="md">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader>Image</Table.ColumnHeader>
+            <Table.ColumnHeader>Name</Table.ColumnHeader>
+            <Table.ColumnHeader>Description</Table.ColumnHeader>
+            <Table.ColumnHeader>Category ID</Table.ColumnHeader>
+            <Table.ColumnHeader>
+              <Flex justifyContent="flex-end">
+                <Link to="/admin/products/add">
+                  <Button colorPalette="blue" size="sm">
+                    Add Product
+                  </Button>
+                </Link>
+              </Flex>
+            </Table.ColumnHeader>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {isLoading ? (
             <Table.Row>
-              <Table.ColumnHeader>Image</Table.ColumnHeader>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Description</Table.ColumnHeader>
-              <Table.ColumnHeader>Category ID</Table.ColumnHeader>
-              <Table.ColumnHeader>
-                <Flex justifyContent="flex-end">
-                  <Link to="/admin/products/add">
-                    <Button colorPalette="blue" size="sm">
-                      Add Product
-                    </Button>
-                  </Link>
+              <Table.Cell colSpan={4}>
+                <Flex justifyContent="center">
+                  <Spinner />
                 </Flex>
-              </Table.ColumnHeader>
+              </Table.Cell>
             </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {isLoading ? (
-                <Table.Row>
-                  <Table.Cell colSpan={4}>
-                    <Flex justifyContent="center">
-                      <Spinner />
-                    </Flex>
-                  </Table.Cell>
-                </Table.Row>
-            ) : (
-                data?.pages.map((page, index) => (
-                    <React.Fragment key={index}>
-                      {page.content.map((product) => (
-                          <AdminProductCard
-                              key={product.id}
-                              product={product}
-                              onProductDeleted={handleProductDeleted}
-                          />
-                      ))}
-                    </React.Fragment>
-                ))
-            )}
-          </Table.Body>
-        </Table.Root>
-      </InfiniteScroll>
+          ) : (
+            data?.pages.map((page, index) => (
+              <React.Fragment key={index}>
+                {page.content.map((product) => (
+                  <AdminProductCard
+                    key={product.id}
+                    product={product}
+                    onProductDeleted={handleProductDeleted}
+                  />
+                ))}
+              </React.Fragment>
+            ))
+          )}
+        </Table.Body>
+      </Table.Root>
+    </InfiniteScroll>
   );
 };
 

@@ -85,7 +85,6 @@ const EditProductPage = () => {
           duration: 3000,
           closable: true,
         });
-
         alert(`Product updated successfully.`);
         navigate("/admin/");
       },
@@ -209,8 +208,7 @@ const EditProductPage = () => {
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           Save Changes
         </Button>
-        <PageButton btnName={"Cancel"} navigateTo={"/admin/"}/>
-
+        <PageButton btnName={"Cancel"} navigateTo={"/admin/"} />
       </form>
     </Box>
   );

@@ -33,15 +33,13 @@ const Login: React.FC = () => {
       const { token, role } = response.data;
 
       // Store token and role in Zustand
-      login(token, email); // Store token in Zustand
+      login(token, email, role); // Store token in Zustand
       // localStorage.setItem("token", token);  // Persist token in localStorage
       localStorage.setItem("role", role); // Persist role in localStorage
 
       alert("Login successful!");
       // Check if there's a `redirectTo` query parameter
       const redirectTo = new URLSearchParams(location.search).get("redirectTo");
-      console.log("redirectto: " + redirectTo);
-      console.log("manuell log out: " + manualLogout);
 
       // Redirect the user either to the `redirectTo` path or a default page (like /admin)
       if (redirectTo && !manualLogout) {

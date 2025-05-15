@@ -1,12 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import useShopQueryStore from "@/store.ts";
 import Product from "@/entities/Product.ts";
-import ms from "ms";
+//import ms from "ms";
 import ApiClient, {FetchResponse} from "@/services/api-client.tsx";
 
 const APIClient = new ApiClient<Product>("/products");
 
-export const useCategories = () => {
+export const useProducts = () => {
   const shopQuery = useShopQueryStore((s) => s.shopQuery);
 
   return useInfiniteQuery<FetchResponse<Product>, Error>({
@@ -24,6 +24,6 @@ export const useCategories = () => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },
     initialPageParam: 0,
-    staleTime: ms("24h"), // 24 hours
+    //staleTime: ms("24h"), // 24 hours
   });
 };

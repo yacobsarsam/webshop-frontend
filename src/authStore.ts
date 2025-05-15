@@ -4,8 +4,9 @@ import { persist } from "zustand/middleware";
 interface AuthState {
   token: string | null;
   email: string | null;
+  role: string | null;
   manualLogout: boolean;
-  login: (token: string, email: string) => void;
+  login: (token: string, email: string, role: string) => void;
   logout: () => void;
   setManualLogout: (flag: boolean) => void;
 }
@@ -15,9 +16,12 @@ const useAuthStore = create<AuthState>()(
     (set) => ({
       token: null,
       email: null,
+      role: null,
       manualLogout: false,
-      login: (token, email) => set({ token, email, manualLogout: false }),
-      logout: () => set({ token: null, email: null, manualLogout: true }),
+      login: (token, email, role) =>
+        set({ token, email, role, manualLogout: false }),
+      logout: () =>
+        set({ token: null, email: null, role: null, manualLogout: true }),
       setManualLogout: (flag) => set({ manualLogout: flag }),
     }),
     { name: "auth" },

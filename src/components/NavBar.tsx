@@ -1,14 +1,15 @@
-import { Button, Flex, HStack, Image } from "@chakra-ui/react";
-import logo from "../assets/logo.webp";
-import { Link } from "react-router-dom";
+import { Flex, HStack, Image } from "@chakra-ui/react";
+import logo from "../assets/storeblack.png";
 import SearchInput from "@/components/SearchInput.tsx";
 import ColorModeSwitch from "./ColorModeSwitch";
 import AuthButton from "@/components/AuthButton.tsx";
 import Cart from "@/components/Cart.tsx";
+import {Link} from "react-router-dom";
 
 interface NavBarProps {
   linkPath: string;
 }
+
 const NavBar = ({ linkPath }: NavBarProps) => {
   return (
     <>
@@ -19,33 +20,12 @@ const NavBar = ({ linkPath }: NavBarProps) => {
         </Flex>
         <HStack>
           <Link to={linkPath}>
-            <Image src={logo} boxSize="60px" alt="Logo" objectFit={"cover"} />
+            <Image src={logo} boxSize="60px" alt="Logo" objectFit={"cover"} borderRadius="5px" />
           </Link>
           <SearchInput />
           <ColorModeSwitch />
         </HStack>
       </Flex>
-
-      {linkPath === "/admin" && (
-        <Flex justifyContent="flex-end" mb={4} gap={4} px={10}>
-          <Link to="/admin/categories/">
-            <Button colorPalette="blue" size="sm">
-              Categories
-            </Button>
-          </Link>
-
-          <Link to="/admin/users/">
-            <Button colorPalette="blue" size="sm">
-              Users
-            </Button>
-          </Link>
-          <Link to="/admin">
-            <Button colorPalette="blue" size="sm">
-              Products
-            </Button>
-          </Link>
-        </Flex>
-      )}
     </>
   );
 };

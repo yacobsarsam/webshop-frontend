@@ -1,13 +1,13 @@
 import { Spinner, Text, Table, Button, Flex } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import AdminProductCard from "@/components/AdminProductRow.tsx"; // a single row renderer
-import { useCategories } from "@/hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 import { Link } from "react-router-dom";
 import React from "react";
 
 const AdminProductGrid = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage, refetch } =
-    useCategories();
+    useProducts();
 
   if (error) return <Text>{error.message}</Text>;
 

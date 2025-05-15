@@ -7,8 +7,12 @@ import {
   Heading,
   Field,
   Spinner,
+  Select,
+  Portal,
+  createListCollection,
 } from "@chakra-ui/react";
 import useCreateProduct from "@/hooks/useCreateProduct";
+import useCategories from "@/hooks/useCategories";
 import Product from "@/entities/Product";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +20,7 @@ import PageButton from "@/components/PageButton.tsx";
 
 const AddProductPage = () => {
   const { mutate: createProduct, status } = useCreateProduct();
+  const { data: categories } = useCategories();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Product>({
@@ -27,7 +32,6 @@ const AddProductPage = () => {
     picturePath: "",
     categoryId: 0,
   });
-  const [pictureFile, setPictureFile] = useState<File | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -36,11 +40,15 @@ const AddProductPage = () => {
     setFormData((prev) => ({
       ...prev,
       [name]:
-        name === "price" || name === "quantity" || name === "categoryId"
-          ? parseFloat(value)
-          : value,
+        name === "price" || name === "quantity" ? parseFloat(value) : value,
     }));
-    setPictureFile(null);
+  };
+
+  const handleCategoryChange = (details: { value: string[] }) => {
+    setFormData((prev) => ({
+      ...prev,
+      categoryId: parseInt(details.value[0]),
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -60,7 +68,7 @@ const AddProductPage = () => {
     }
 
     createProduct(
-      { product: formData, picture: pictureFile ?? undefined },
+      { product: formData },
       {
         onSuccess: () => {
           toaster.create({
@@ -92,6 +100,14 @@ const AddProductPage = () => {
     formData.price > 0 &&
     formData.quantity >= 0 &&
     formData.categoryId > 0;
+
+  const categoryCollection = createListCollection({
+    items:
+      categories?.content.map((cat) => ({
+        label: cat.name,
+        value: cat.id.toString(),
+      })) || [],
+  });
 
   return (
     <Box maxW="600px" mx="auto" mt={10}>
@@ -150,21 +166,39 @@ const AddProductPage = () => {
           />
         </Field.Root>
         <Field.Root mb={4}>
-          <Field.Label htmlFor="categoryId">Category</Field.Label>
-          <Input
-            id="categoryId"
-            name="categoryId"
-            type="number"
-            value={formData.categoryId}
-            onChange={handleChange}
-            placeholder="Enter product category ID"
-          />
+          <Field.Label>Category</Field.Label>
+          <Select.Root
+            collection={categoryCollection}
+            value={[formData.categoryId.toString()]}
+            onValueChange={(details) => handleCategoryChange(details)}
+          >
+            <Select.HiddenSelect />
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText placeholder="Select category" />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {categoryCollection.items.map((item) => (
+                    <Select.Item item={item} key={item.value}>
+                      {item.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
         </Field.Root>
         <Button type="submit" colorPalette="blue" disabled={!isValid}>
           {status === "pending" ? <Spinner size="sm" /> : "Add Product"}
         </Button>
         <PageButton btnName={"Cancel"} navigateTo={"/admin/"} />
-
       </form>
     </Box>
   );

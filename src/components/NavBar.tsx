@@ -4,7 +4,7 @@ import SearchInput from "@/components/SearchInput.tsx";
 import ColorModeSwitch from "./ColorModeSwitch";
 import AuthButton from "@/components/AuthButton.tsx";
 import Cart from "@/components/Cart.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface NavBarProps {
   linkPath: string;
@@ -20,7 +20,13 @@ const NavBar = ({ linkPath }: NavBarProps) => {
         </Flex>
         <HStack>
           <Link to={linkPath}>
-            <Image src={logo} boxSize="60px" alt="Logo" objectFit={"cover"} borderRadius="5px" />
+            <Image
+              src={logo}
+              boxSize="60px"
+              alt="Logo"
+              objectFit={"cover"}
+              borderRadius="5px"
+            />
           </Link>
           <SearchInput />
           <ColorModeSwitch />

@@ -18,6 +18,10 @@ const Cart = () => {
   // setIsOpen(!isOpen);
   //  };
 
+  const totalNumArticles = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0,
+  );
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
@@ -27,7 +31,7 @@ const Cart = () => {
       <Drawer.Trigger asChild>
         <Button variant="outline" size="sm" bg="green.600" color="white">
           <LuShoppingCart style={{ marginRight: "8px" }} color="white" />
-          Cart
+          Cart ({totalNumArticles}) - ${totalAmount.toFixed(2)}
         </Button>
       </Drawer.Trigger>
       <Portal>

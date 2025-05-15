@@ -15,7 +15,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError(""); // Reset error message on each submit
+    setError("");
 
     try {
       const response = await axios.post(
@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       const { token, role } = response.data;
 
       // Store token and role in Zustand
-      login(token); // Store token in Zustand
+      login(token, email); // Store token in Zustand
       // localStorage.setItem("token", token);  // Persist token in localStorage
       localStorage.setItem("role", role); // Persist role in localStorage
 

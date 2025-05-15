@@ -14,8 +14,12 @@ const AdminProductGrid = () => {
   const fetchedProductCount =
     data?.pages.reduce((acc, page) => acc + page.content.length, 0) || 0;
 
-  const handleProductDeleted = () => {
-    refetch();
+  const handleProductDeleted = async () => {
+    try {
+      await refetch();
+    } catch (error) {
+      console.error("Error during refetch:", error);
+    }
   };
 
   return (

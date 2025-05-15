@@ -8,8 +8,12 @@ const AdminCategoriesGrid = () => {
 
   if (error) return <Text>{error.message}</Text>;
 
-  const handleCategoryDeleted = () => {
-    refetch();
+  const handleCategoryDeleted = async () => {
+    try {
+      await refetch();
+    } catch (error) {
+      console.error("Error during refetch:", error);
+    }
   };
 
   return (

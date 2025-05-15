@@ -8,10 +8,13 @@ const AdminUsersGrid = () => {
 
   if (error) return <Text>{error.message}</Text>;
 
-  const handleUserDeleted = () => {
-    refetch();
+  const handleUserDeleted = async () => {
+    try {
+      await refetch();
+    } catch (error) {
+      console.error("Error during refetch:", error);
+    }
   };
-
   return (
     <Table.Root colorPalette="gray" size="md">
       <Table.Header>

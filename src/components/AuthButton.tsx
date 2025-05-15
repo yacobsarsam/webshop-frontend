@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/authStore";
 import { Button } from "@chakra-ui/react";
+import React from "react";
 
 const AuthButton: React.FC = () => {
   const token = useAuthStore((state) => state.token);

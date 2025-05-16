@@ -34,8 +34,6 @@ const Login: React.FC = () => {
 
       // Store token and role in Zustand
       login(token, email, role); // Store token in Zustand
-      // localStorage.setItem("token", token);  // Persist token in localStorage
-      localStorage.setItem("role", role); // Persist role in localStorage
 
       alert("Login successful!");
       // Check if there's a `redirectTo` query parameter

@@ -60,7 +60,7 @@ export const ProductCard = ({ product }: Props) => {
           </Text>{" "}
           {quantityInCart === 0 ? (
             <Button
-              colorScheme="blue"
+              colorPalette="blue"
               mt={3}
               onClick={handleIncrease}
               disabled={product.quantity <= 0}

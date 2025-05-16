@@ -10,7 +10,7 @@ interface RequireAuthProps {
 const RequireAuth = ({ children, requiredRole }: RequireAuthProps) => {
   const token = useAuthStore((state) => state.token);
   const location = useLocation();
-  const role = localStorage.getItem("role"); // Retrieve role from localStorage
+  const role = useAuthStore((state) => state.role);
 
   if (!token) {
     return (

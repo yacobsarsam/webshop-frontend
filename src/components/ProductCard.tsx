@@ -21,7 +21,6 @@ export const ProductCard = ({ product }: Props) => {
 
   const quantityInCart = getCartItemQuantity(product.id);
 
-
   const handleIncrease = () => {
     if (quantityInCart < product.quantity) {
       addToCart({
@@ -29,6 +28,7 @@ export const ProductCard = ({ product }: Props) => {
         name: product.name,
         price: product.price,
         quantity: 1,
+        picturePath: product.picturePath,
       });
     }
   };
@@ -71,6 +71,7 @@ export const ProductCard = ({ product }: Props) => {
             <HStack>
               <Button
                 size="sm"
+                colorPalette="blue"
                 onClick={handleDecrease}
                 disabled={quantityInCart <= 0}
               >
@@ -79,6 +80,7 @@ export const ProductCard = ({ product }: Props) => {
               <Text>{quantityInCart}</Text>
               <Button
                 size="sm"
+                colorPalette="blue"
                 onClick={handleIncrease}
                 disabled={quantityInCart >= product.quantity}
               >

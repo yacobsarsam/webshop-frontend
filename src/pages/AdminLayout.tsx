@@ -110,7 +110,7 @@ const AdminLayout = () => {
         </Box>
       </Box>
     </Box>
-  )
+  );
 };
 
 export default AdminLayout;

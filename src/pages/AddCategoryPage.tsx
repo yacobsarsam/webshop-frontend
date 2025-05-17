@@ -86,7 +86,6 @@ const AddCategoryPage = () => {
           {status === "pending" ? <Spinner size="sm" /> : "Add Category"}
         </Button>
         <PageButton btnName={"Cancel"} navigateTo={"/admin/categories/"} />
-
       </form>
     </Box>
   );

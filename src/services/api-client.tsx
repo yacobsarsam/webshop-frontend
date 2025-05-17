@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import useAuthStore from "@/authStore.ts";
 import router from "@/routes.tsx";
+import { BASE_URL } from "@/config";
 
 export interface FetchResponse<T> {
   count: number;
@@ -9,11 +10,11 @@ export interface FetchResponse<T> {
 }
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: BASE_URL,
 });
 
 const axiosInstanceWithoutAuth = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: BASE_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -29,7 +30,9 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       useAuthStore.getState().logout(); // Clear token from Zustand
       const currentPath = window.location.pathname;
-      router.navigate(`/login?redirectTo=${encodeURIComponent(currentPath)}`);
+      void router.navigate(
+        `/login?redirectTo=${encodeURIComponent(currentPath)}`,
+      );
     }
     return Promise.reject(error);
   },
@@ -43,7 +46,9 @@ class ApiClient<T> {
   }
 
   getAll = (config: AxiosRequestConfig) => {
-    const instance = this.endpoint.includes("/users") ? axiosInstance : axiosInstanceWithoutAuth;
+    const instance = this.endpoint.includes("/users")
+      ? axiosInstance
+      : axiosInstanceWithoutAuth;
     return instance
       .get<FetchResponse<T>>(this.endpoint, config)
       .then((res) => res.data);
@@ -54,14 +59,12 @@ class ApiClient<T> {
       .then((res) => res.data);
   };
   post = (data: T) => {
-    return axiosInstance
-      .post<T>(this.endpoint, data)
-      .then((res) => res.data);
+    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
   postForm = (formData: FormData) => {
     return axiosInstance
-        .post<T>(this.endpoint, formData)
-        .then((res) => res.data);
+      .post<T>(this.endpoint, formData)
+      .then((res) => res.data);
   };
   put = (id: number | string, data: T) => {
     return axiosInstance

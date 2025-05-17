@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuthStore from "@/authStore"; // Import your Zustand store
+import { BASE_URL } from '../config';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/auth/login",
+        `${BASE_URL}/auth/login`,
         {
           email,
           password,

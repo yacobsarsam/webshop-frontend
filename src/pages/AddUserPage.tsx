@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/authStore.ts";
 import { Button } from "@chakra-ui/react";
 import PageButton from "@/components/PageButton.tsx";
+import { BASE_URL } from '../config';
 
 const AddUserPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ const AddUserPage: React.FC = () => {
 
     try {
       await axios.post(
-        "http://localhost:8080/auth/register", // Replace with your API endpoint
+        `${BASE_URL}/auth/register`,
         { email, password, role },
         {
           headers: {

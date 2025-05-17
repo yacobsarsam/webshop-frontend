@@ -57,9 +57,9 @@ const router = createBrowserRouter([
       {
         path: "users/edit/:id",
         element: (
-            <RequireAuth requiredRole="ADMIN">
-              <EditUserPage />
-            </RequireAuth>
+          <RequireAuth requiredRole="ADMIN">
+            <EditUserPage />
+          </RequireAuth>
         ),
       },
       {

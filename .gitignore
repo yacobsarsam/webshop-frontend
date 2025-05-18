@@ -26,3 +26,5 @@ dist-ssr
 # Editor-based HTTP Client requests
 http-client.private.env.json
 .env
+
+.vercel

@@ -1,4 +1,4 @@
 export const BASE_URL =
-    process.env.NODE_ENV === "development"
-        ? process.env.DEV_BASE_URL
-        : process.env.PROD_BASE_URL;
+    import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_DEV_BASE_URL
+        : import.meta.env.VITE_PROD_BASE_URL;

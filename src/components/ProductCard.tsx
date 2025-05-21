@@ -1,16 +1,11 @@
-import {
-  Button,
-  Card,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Card, Heading, Image, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Product from "@/entities/Product.ts";
 import noImage from "../assets/no-image-placeholder.webp";
 import useCartStore from "@/hooks/useCartStore";
+import PriceDisplay from "./PriceDisplay";
+import QuantityDisplay from "@/components/QuantityDisplay.tsx";
+import CartControls from "@/components/CartControls.tsx";
 
 interface Props {
   product: Product;
@@ -50,44 +45,14 @@ export const ProductCard = ({ product }: Props) => {
           <Heading fontSize={"2xl"}>
             <Link to={"/products/" + product.id}> {product.name} </Link>
           </Heading>
-          <Text>
-            Availability:{" "}
-            {product.quantity === 0
-              ? "Sold Out"
-              : product.quantity > 10
-                ? "10+"
-                : product.quantity}
-          </Text>{" "}
-          {quantityInCart === 0 ? (
-            <Button
-              colorPalette="blue"
-              mt={3}
-              onClick={handleIncrease}
-              disabled={product.quantity <= 0}
-            >
-              Buy
-            </Button>
-          ) : (
-            <HStack>
-              <Button
-                size="sm"
-                colorPalette="blue"
-                onClick={handleDecrease}
-                disabled={quantityInCart <= 0}
-              >
-                -
-              </Button>
-              <Text>{quantityInCart}</Text>
-              <Button
-                size="sm"
-                colorPalette="blue"
-                onClick={handleIncrease}
-                disabled={quantityInCart >= product.quantity}
-              >
-                +
-              </Button>
-            </HStack>
-          )}
+          <PriceDisplay price={product.price} />
+          <QuantityDisplay quantity={product.quantity} />
+          <CartControls
+            quantityInCart={quantityInCart}
+            productQuantity={product.quantity}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+          />
         </VStack>
       </Card.Body>
     </Card.Root>

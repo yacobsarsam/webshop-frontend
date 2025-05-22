@@ -14,8 +14,6 @@ const useCartActions = (product: Product) => {
                 price: product.price,
                 quantity: 1,
                 picturePath: product.picturePath,
-                description: product.description,
-                categoryId: product.categoryId,
             });
         }
     };

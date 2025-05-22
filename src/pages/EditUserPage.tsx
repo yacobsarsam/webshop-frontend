@@ -12,9 +12,9 @@ import {
   createListCollection,
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import useUser from "@/hooks/useUser";
 import useUpdateUser from "@/hooks/useUpdateUser";
 import PageButton from "@/components/PageButton.tsx";
+import useUser from "@/hooks/useUser";
 
 const roles = createListCollection({
   items: [

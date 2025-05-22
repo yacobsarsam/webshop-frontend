@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import useShopQueryStore from "@/store.ts";
 import Product from "@/entities/Product.ts";
 //import ms from "ms";
-import ApiClient, {FetchResponse} from "@/services/api-client.tsx";
+import ApiClient, { FetchResponse } from "@/services/api-client.tsx";
 
 const APIClient = new ApiClient<Product>("/products");
 
@@ -12,16 +12,16 @@ export const useProducts = () => {
   return useInfiniteQuery<FetchResponse<Product>, Error>({
     queryKey: ["products", shopQuery],
     queryFn: ({ pageParam = 1 }) =>
-        APIClient.getAll({
-          params: {
-            category: shopQuery.categoryId,
-            ordering: shopQuery.sortOrder,
-            search: shopQuery.searchText,
-            page: pageParam,
-          },
-        }),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.next ? allPages.length + 1 : undefined;
+      APIClient.getAll({
+        params: {
+          category: shopQuery.categoryId,
+          ordering: shopQuery.sortOrder,
+          search: shopQuery.searchText,
+          page: pageParam,
+        },
+      }),
+    getNextPageParam: (lastPage) => {
+      return lastPage.last ? undefined : lastPage.pageable.pageNumber + 1;
     },
     initialPageParam: 0,
     //staleTime: ms("24h"), // 24 hours

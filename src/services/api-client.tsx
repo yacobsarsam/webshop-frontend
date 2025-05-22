@@ -5,8 +5,15 @@ import { BASE_URL } from "@/config";
 
 export interface FetchResponse<T> {
   count: number;
-  next: string | null;
   content: T[];
+  last: boolean;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
 }
 
 const axiosInstance = axios.create({

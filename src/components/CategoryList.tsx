@@ -11,7 +11,6 @@ import store from "@/store.ts";
 
 const CategoryList = () => {
   const { data, error, isLoading } = useCategories();
-  console.log("category_data", data);
   const selectedCategoryId = store((state) => state.shopQuery.categoryId);
   const setSelectedCategoryId = store((state) => state.setCategoryId);
   if (error) return null;

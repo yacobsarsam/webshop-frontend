@@ -4,7 +4,7 @@ import useShopQueryStore from "@/store.ts";
 
 export const SortSelector = () => {
   const setOrders = [
-    { value: "", lable: "Relevance" },
+    { value: '', lable: "Relevance" },
     { value: "name", lable: "Name" },
     { value: "price", lable: "Price (Low to High)" },
     { value: "-price", lable: "Price (High to Low)" },

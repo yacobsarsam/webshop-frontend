@@ -5,12 +5,12 @@ import ColorModeSwitch from "./ColorModeSwitch";
 import AuthButton from "@/components/AuthButton.tsx";
 import Cart from "@/components/Cart.tsx";
 import { Link } from "react-router-dom";
-
 interface NavBarProps {
   linkPath: string;
 }
 
 const NavBar = ({ linkPath }: NavBarProps) => {
+
   return (
     <>
       <Flex direction="column" padding={10}>
@@ -26,6 +26,7 @@ const NavBar = ({ linkPath }: NavBarProps) => {
               alt="Logo"
               objectFit={"cover"}
               borderRadius="5px"
+              cursor="pointer"
             />
           </Link>
           <SearchInput />

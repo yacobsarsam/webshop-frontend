@@ -2,37 +2,17 @@ import { Card, Heading, Image, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Product from "@/entities/Product.ts";
 import noImage from "../assets/no-image-placeholder.webp";
-import useCartStore from "@/hooks/useCartStore";
 import PriceDisplay from "./PriceDisplay";
 import QuantityDisplay from "@/components/QuantityDisplay.tsx";
 import CartControls from "@/components/CartControls.tsx";
+import useCartActions from "@/hooks/useCartActions";
 
 interface Props {
   product: Product;
 }
 
 export const ProductCard = ({ product }: Props) => {
-  const { addToCart, updateCartItem, getCartItemQuantity } = useCartStore();
-
-  const quantityInCart = getCartItemQuantity(product.id);
-
-  const handleIncrease = () => {
-    if (quantityInCart < product.quantity) {
-      addToCart({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-        picturePath: product.picturePath,
-      });
-    }
-  };
-
-  const handleDecrease = () => {
-    if (quantityInCart > 0) {
-      updateCartItem(product.id, quantityInCart - 1);
-    }
-  };
+  const { quantityInCart, handleIncrease, handleDecrease } = useCartActions(product);
   return (
     <Card.Root>
       <Image

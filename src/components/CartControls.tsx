@@ -1,10 +1,10 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 
 interface Props {
-    quantityInCart: number;
-    productQuantity: number;
-    onIncrease: () => void;
-    onDecrease: () => void;
+  quantityInCart: number;
+  productQuantity: number;
+  onIncrease: () => void;
+  onDecrease: () => void;
 }
 
 const CartControls = ({
